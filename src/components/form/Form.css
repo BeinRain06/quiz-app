@@ -1,0 +1,83 @@
+:root {
+  --form-container-background: #fff;
+  --background-difficulty-hover: rgb(21, 18, 48);
+  --background-category-hover: rgb(247, 214, 70);
+  --background-input-form: #dce4eb;
+  --background-start-hover: rgb(145, 10, 10);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+div {
+  width: 100%;
+}
+
+@media (min-width: 210px) {
+  .form_container {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 1rem 0.5rem;
+    height: auto;
+    background-color: var(--background-category-hover);
+  }
+
+  .form_content {
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .welcome_title {
+    font-size: 14px;
+    text-align: left;
+    padding: 0.5rem 0;
+  }
+
+  .wrap_form {
+    width: 100%;
+  }
+
+  .form_control {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+  }
+
+  .form_control select {
+    transition: all 0.4s ease-in-out;
+  }
+
+  .form_control select[name="category"]:hover {
+    color: #fff;
+    background-color: var(--background-category-hover);
+  }
+
+  .form_control select[name="difficulty"]:hover {
+    color: #fff;
+    background-color: var(--background-difficulty-hover);
+  }
+
+  .input_form {
+    background-color: var(--background-input-form);
+  }
+
+  .btn_submit {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background-color: var(--background-category-hover);
+    transition: all 0.4s ease-in-out;
+  }
+
+  .btn_submit:hover {
+    background-color: var(--background-start-hover);
+  }
+}

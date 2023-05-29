@@ -1,0 +1,118 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+div {
+  width: 100%;
+}
+
+@media (min-width: 210px) {
+  .resume_container {
+    width: 80%;
+    position: relative;
+    gap: 1rem;
+  }
+  .resume content {
+    padding: 1rem;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* primarly response */
+
+  .primarly_response {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .answering_side {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .station_land {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .listening_question {
+    justify-content: space-between;
+    margin-block: 1rem;
+  }
+
+  .listening_question .asked_for {
+    max-width: 70%;
+    text-align: left;
+    align-items: center;
+    padding: 0.25rem 0;
+  }
+
+  .listening_question .see_answer {
+    width: 12%;
+    padding: 0.25rem 0;
+    background-color: rgb(32, 1, 36);
+    outline: none;
+    border: none;
+  }
+
+  .bloc_answer {
+    display: block;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    border: 1px solid rgb(66, 66, 134);
+    margin: auto;
+  }
+
+  /* icons grade */
+
+  .bi-dash,
+  .bi-plus {
+    font-size: 14px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: red;
+  }
+
+  .bi-plus {
+    background-color: green;
+  }
+
+  /* scored division */
+
+  .scored {
+    display: block;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    background-color: rgb(105, 105, 167);
+    margin: auto;
+    font-size: 12px;
+  }
+
+  .continue_game {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .btn_game_on {
+    display: block;
+    text-align: center;
+    font-size: 12px;
+    width: 40px;
+    height: 10px;
+    color: #fff;
+    background-color: green;
+  }
+}
