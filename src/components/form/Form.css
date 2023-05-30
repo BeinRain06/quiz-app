@@ -80,4 +80,12 @@ div {
   .btn_submit:hover {
     background-color: var(--background-start-hover);
   }
+
+  .error_msg {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    align-items: center;
+    color: red;
+  }
 }

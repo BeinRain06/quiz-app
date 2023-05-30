@@ -1,24 +1,26 @@
 import "./Form.css";
 import { useContext } from "react";
 import { AppContext } from "../../services/App-Context";
-import axios from "axios";
+import Loading from "../loading/Loading";
+import Quiz from "../quiz/Quiz";
 
 function Form() {
-  const { quiz } = useContext(AppContext);
+  const {
+    quiz,
+    handleChangeInput,
+    handleOnStart,
+    isLoading,
+    isStarted,
+    error,
+  } = useContext(AppContext);
 
-  const fetchQuery = async () => {
-    try {
-      const response = await axios.get("https://opentdb.com/api.php?amount=10");
-      const result = response.data;
-      console.log("response.data :", result);
-    } catch (err) {
-      console.log("error while fetching:", err);
-    }
-  };
+  if (isLoading) {
+    return <Loading />;
+  }
 
-  const handleOnStart = () => {
-    fetchQuery();
-  };
+  if (isStarted) {
+    return <Quiz />;
+  }
 
   return (
     <div className="form_container row col-10 col-md-4">
@@ -31,13 +33,19 @@ function Form() {
               type="number"
               name="amount"
               className="input_form"
-              value="10"
+              value={quiz.amount}
             />
           </div>
           <div className="form_control">
             <label htmlFor="category">Category</label>
-            <select name="category" className="input_form">
-              <option value="sports">sports</option>
+            <select
+              name="category"
+              className="input_form"
+              onClick={handleChangeInput}
+            >
+              <option value="sports" selected>
+                sports
+              </option>
               <option value="history">history</option>
               <option value="science">science</option>
               <option value="art">art</option>
@@ -46,8 +54,14 @@ function Form() {
           </div>
           <div className="form_control">
             <label htmlFor="difficulty">Difficulty</label>
-            <select name="difficulty" className="input_form">
-              <option value="sports">easy</option>
+            <select
+              name="difficulty"
+              className="input_form"
+              onClick={handleChangeInput}
+            >
+              <option value="sports" selected>
+                easy
+              </option>
               <option value="history">medium</option>
               <option value="science">difficult</option>
             </select>
@@ -55,6 +69,9 @@ function Form() {
           <button type="button" className="btn_submit" onClick={handleOnStart}>
             start
           </button>
+          <div className="error_msg d-flex flex-center">
+            <p className="err_msg">{error !== "" && error} </p>
+          </div>
         </form>
       </div>
     </div>

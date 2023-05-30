@@ -10,7 +10,7 @@ function AppProvider(props) {
   const [questions, setQuestions] = useState([]);
   const [indexTarget, setIndexTarget] = useState(0);
   const [error, setError] = useState("");
-  const [answer, setAnswer] = useState("");
+  const [answer, setAnswer] = useState(false);
   const [showResume, setShowResume] = useState(false);
   const [resumeArray, setResumeArray] = useState([]);
   //win or loose message
@@ -55,6 +55,9 @@ function AppProvider(props) {
         data.response_code,
         "Trivia API"
       );
+      setTimeout(() => {
+        setError("");
+      }, 3000);
       console.log("error while fetching:", err);
     }
   };
@@ -165,10 +168,13 @@ function AppProvider(props) {
     winOrLoose,
     modal,
     quiz,
+    answer,
     handleChangeInput,
     handleOnStart,
     nextQuestions,
+    retrieveAnswer,
     recordGame,
+    setAnswer,
     playAgain,
   };
   return (
