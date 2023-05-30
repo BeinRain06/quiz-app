@@ -1,6 +1,25 @@
 import "./Form.css";
+import { useContext } from "react";
+import { AppContext } from "../../services/App-Context";
+import axios from "axios";
 
 function Form() {
+  const { quiz } = useContext(AppContext);
+
+  const fetchQuery = async () => {
+    try {
+      const response = await axios.get("https://opentdb.com/api.php?amount=10");
+      const result = response.data;
+      console.log("response.data :", result);
+    } catch (err) {
+      console.log("error while fetching:", err);
+    }
+  };
+
+  const handleOnStart = () => {
+    fetchQuery();
+  };
+
   return (
     <div className="form_container row col-10 col-md-4">
       <div className="form_content d-flex flex-center">
@@ -33,7 +52,7 @@ function Form() {
               <option value="science">difficult</option>
             </select>
           </div>
-          <button type="submit" className="btn_submit">
+          <button type="button" className="btn_submit" onClick={handleOnStart}>
             start
           </button>
         </form>
