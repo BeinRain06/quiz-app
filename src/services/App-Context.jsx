@@ -23,11 +23,11 @@ function AppProvider(props) {
   });
 
   const table = {
-    sports: 24,
-    history: 15,
-    science: 20,
-    art: 10,
-    entertainment: 14,
+    sports: 21,
+    history: 23,
+    science: 18,
+    art: 25,
+    entertainment: 11,
   };
 
   const fetchQuery = async (url) => {
@@ -37,14 +37,11 @@ function AppProvider(props) {
 
       const response = await axios.get(url);
       const data = response.data;
+      console.log(data.response_code);
+      console.log(data.results);
       if (data) {
-        setQuestions(() =>
-          data.results.map((item, index) => {
-            const bookAnswers = appendArrayAnswer(item);
-
-            return { ...item, bookAnswers: bookAnswers };
-          })
-        );
+        setQuestions(() => data.results);
+        console.log(questions);
         setLoading(false);
       }
     } catch (err) {
@@ -52,8 +49,8 @@ function AppProvider(props) {
       setIsStarted(false);
       setError(
         "something went wrong. code error :",
-        data.response_code,
-        "Trivia API"
+        "Trivia API",
+        "see console"
       );
       setTimeout(() => {
         setError("");
@@ -66,31 +63,14 @@ function AppProvider(props) {
     e.preventDefault();
     const name = e.target.name;
     const value = e.target.value;
-    setQuiz(() => ({ ...prev, [name]: value }));
+    setQuiz(() => ({ ...quiz, [name]: value }));
   };
 
   const handleOnStart = () => {
     const { amount, category, difficulty } = quiz;
     const url = `https://opentdb.com/api.php?amount=${amount}&category=${table[category]}&difficulty=${difficulty}&type=multiple`;
-    console.log(table[category]);
-    console.log("break views");
-    console.log(table.category);
+
     fetchQuery(url);
-  };
-
-  const appendArrayAnswer = (item) => {
-    const existingChoice = 4; // 1 correct and 3 incorrect answers
-    const falseAnswers = item.incorrect_answers;
-    const correctAnswer = item.correct_answer;
-    const tmpIndex = Math.floor(Math.random() * existingChoice);
-
-    const bookAnswers = [
-      ...falseAnswers.slice(0, tmpIndex),
-      correctAnswer,
-      ...falseAnswers.slice(tmpIndex),
-    ];
-
-    return bookAnswers;
   };
 
   const nextQuestions = () => {
@@ -99,8 +79,10 @@ function AppProvider(props) {
     if (indexTarget < questions.length) {
       setIndexTarget(indexTarget + 1);
     } else {
-      {
-        percentage > 50 ? setWinOrLoose(true) : setWinOrLoose(false);
+      if (percentage > 50) {
+        setWinOrLoose(true);
+      } else {
+        setWinOrLoose(false);
       }
       setIndexTarget(0);
       setModal(true);
@@ -119,8 +101,8 @@ function AppProvider(props) {
     if (value === correctAnswer) {
       setCorrect(() => correct + 1);
       setResumeArray(() => [
-        ...prev,
-        (prev[indexTarget] = {
+        ...resumeArray,
+        (resumeArray[indexTarget] = {
           order: indexTarget + 1,
           question: queryBox.question,
           answer: queryBox.correct_answer,
@@ -129,8 +111,8 @@ function AppProvider(props) {
       ]);
     } else {
       setResumeArray(() => [
-        ...prev,
-        (prev[indexTarget] = {
+        ...resumeArray,
+        (resumeArray[indexTarget] = {
           order: indexTarget + 1,
           question: queryBox.question,
           answer: queryBox.correct_answer,
@@ -156,6 +138,7 @@ function AppProvider(props) {
   const recordGame = () => {
     setShowResume(true);
   };
+
   const contextValue = {
     correct,
     isLoading,

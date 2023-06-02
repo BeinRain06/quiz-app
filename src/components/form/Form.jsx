@@ -23,7 +23,7 @@ function Form() {
   }
 
   return (
-    <div className="form_container row col-10 col-md-4">
+    <div className="form_container row col-11 col-md-6">
       <div className="form_content d-flex flex-center">
         <h1 className="welcome_title">Setup Quiz</h1>
         <form className="wrap_form">
@@ -34,6 +34,7 @@ function Form() {
               name="amount"
               className="input_form"
               value={quiz.amount}
+              onChange={handleChangeInput}
             />
           </div>
           <div className="form_control">
@@ -41,11 +42,9 @@ function Form() {
             <select
               name="category"
               className="input_form"
-              onClick={handleChangeInput}
+              onChange={handleChangeInput}
             >
-              <option value="sports" selected>
-                sports
-              </option>
+              <option value="sports">sports</option>
               <option value="history">history</option>
               <option value="science">science</option>
               <option value="art">art</option>
@@ -57,17 +56,15 @@ function Form() {
             <select
               name="difficulty"
               className="input_form"
-              onClick={handleChangeInput}
+              onChange={handleChangeInput}
             >
-              <option value="sports" selected>
-                easy
-              </option>
+              <option value="sports">easy</option>
               <option value="history">medium</option>
               <option value="science">difficult</option>
             </select>
           </div>
           <button type="button" className="btn_submit" onClick={handleOnStart}>
-            start
+            Start
           </button>
           <div className="error_msg d-flex flex-center">
             <p className="err_msg">{error !== "" && error} </p>

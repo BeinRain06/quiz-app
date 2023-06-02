@@ -8,18 +8,7 @@ function Modal() {
     useContext(AppContext);
 
   if (showResume) {
-    return (
-      <div className="resume_container">
-        <div className="resume_content">
-          <h1 className="title_resume">End Game</h1>
-          <ul className="record_list">
-            {resumeArray.map((item, index) => {
-              <li className="record_element"></li>;
-            })}
-          </ul>
-        </div>
-      </div>
-    );
+    return <Resume />;
   }
 
   return (
