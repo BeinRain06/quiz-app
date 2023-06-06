@@ -29,8 +29,44 @@ You might be interested on how:
 >
 > **analyzing**
 
-1.  Here is What I figured out. **Usecontext** solve the problem to store some **data** thats more than **one component** are in need to use. These data can be **fetched API data** or some **state data** that changes is allowed using some events like _onClick_, _onMouseOver_, _onInput_, and many others. **state data changes** is made barely in react using `useState Hook` or `useReducer` .
-2.  three essentials spices needs to used in a such a way to achieve good implementation of _useContext Hook_ :
+1. **identify clicked button in unordered list react**
+   >
+
+- i got a hard time when trying to perform a **single action** with the unordered list of button located in my `QueueItem.jsx` file. I was using _useState Hook_ but i still go throuh the fact when clicking **one** `button` of my **list** it end up showing the value of all the answer containe in all other **li** of the list. But my goal was each `button` clicked has just the duty to **show** the answer to the question contained in his **li** not to the others.
+  >
+- i **finally** figure out that if i create a new property inside my **resumeArray** called `showed`. I can set it to `false` initially and when my **button** in the **li** will be **clicked** i change the value of `showed` to be the opposite of what it was `!item.showed` then i could make a targeted response encompasses in my **li** rendering
+  >
+- we could check these following line of code to see what precisely we are talking about :
+- ### AppContext.jsx file
+- `const queryBox = questions.find((item, index) => index === indexTarget);
+        setResumeArray(() => [
+          ...resumeArray,
+          (resumeArray[indexTarget] = {
+            id: indexTarget + 1,
+            question: queryBox.question,
+            answer: queryBox.correct_answer,
+            right: false,
+**here** ->   showed: false,
+          }),
+        ]);`
+
+- ### QueueItem.jsx file
+- const handleShowAnswer = () => {
+  setAnswer(!answer);
+  item.showed = !item.showed;
+  };
+- `<button className="see_answer" onClick={handleShowAnswer}>
+      answer
+    </button>`
+- `{item.showed && (
+      <div className="bloc_answer">
+        <p className="right_answer_was"> {item.answer} </p>
+      </div>
+    )}`
+
+2.  Here is What I figured out. **Usecontext** solve the problem to store some **data** thats more than **one component** are in need to use. These data can be **fetched API data** or some **state data** that changes is allowed using some events like _onClick_, _onMouseOver_, _onInput_, and many others. **state data changes** is made barely in react using `useState Hook` or `useReducer` .
+
+3.  three essentials spices needs to used in a such a way to achieve good implementation of _useContext Hook_ :
 
     - a function (e.g_name : AppContext) that **creates** our dealing context using `createContext` from **React** Library
 
@@ -41,13 +77,20 @@ You might be interested on how:
 
 - e.g:
 
-  > `export const AppContextProvider(props) => { const [toggle, setToggle] = useState(false); const [isHovered, setHover] = useState(false);
-const isToggled = () => { setToggle(!toggle); console.log(toggle);}; const setHoverFunction = () => {setHover(!isHovered); };const contextValue = { isToggled, setHoverFunction, toggle, isHovered }; return (
-<AppContext.Provider value={contextValue}>
-{props.children}
-</AppContext.Provider>
-);
-};`
+  > `export const AppContextProvider(props) => {
+
+  const [correct, setCorrect] = useState(0);
+  const [isLoading, setLoading] = useState(false);
+  const [isStarted, setIsStarted] = useState(false);
+  const [questions, setQuestions] = useState([]);
+  const [indexTarget, setIndexTarget] = useState(0);
+  ...
+  const contextValue = { correct, isLoading, isStarted, questions, ... }; return (
+  <AppContext.Provider value={contextValue}>
+  {props.children}
+  </AppContext.Provider>
+  );
+  };`
 
 - variables we need called in a **destructuring syntax** in specific components in demands
 
@@ -58,16 +101,17 @@ const isToggled = () => { setToggle(!toggle); console.log(toggle);}; const setHo
 
 ## CSS Structures:
 
-> - <App/> main component connect to node handle all the javascript need to display all our **related webpages** ,
+> - <App/> wrapper component,
 
-> four main components :
-> -Profile.jsx, Skills.jsx, Experience.jsx, Education.jsx, submit.ejs
+> one main component : -Form.jsx
+> -Form.jsx call Loading.jsx
+> Loading.jsx end set Quiz.jsx, etc
 
 **Picture**
 
 ---
 
-![./Desktop-Resume-Portfolio-One.png](./Desktop-Resume-Portfolio-One.png)
+![./Desktop-Quiz-App.png](./Desktop-Quiz-App.png)
 
 ---
 
@@ -97,7 +141,7 @@ Like this:
 
 ---
 
-![./Mobile-Resume-Portfolio-One.png](./Mobile-Resume-Portfolio-One.png)
+![./Mobile-Quiz-App.png](./Mobile-Quiz-App.png)
 
 ---
 
@@ -109,7 +153,7 @@ Like this:
 
 - w3Schools: [https://w3schools.com/bootstrap/bootstrap_grid_system_asp](https://w3schools.com/bootstrap/bootstrap_grid_system_asp) : helps me learn quickly how to implement **css grid** using **bootstrap**
 
-- getBootstrap: [https://getbootstrap.com](https://getbootstrap.com) : resources website of bootstrap , helps us to go through the differents uses of bootstrap. And land us to implement `bootstrap grid`, `bootstrap icons`, and `bootstrap classes`
+- stackoverflow.com: [https://stackoverflow.com/questions/59652504/identify-clicked-button-in-unordered-list-react](https://stackoverflow.com/questions/59652504/identify-clicked-button-in-unordered-list-react) : this post enlights me to strructure my <li> tag as a `component` to be able to access `button` within of each <li> items in such kind to perform some actions specific to the `button` **clicked**
 
 ## Acknowledge:
 

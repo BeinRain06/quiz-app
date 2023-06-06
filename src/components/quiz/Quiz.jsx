@@ -1,10 +1,17 @@
 import "./Quiz.css";
 import { useContext } from "react";
 import { AppContext } from "../../services/App-Context";
+import Modal from "../modal/Modal";
 
 function Quiz() {
-  const { correct, questions, indexTarget, nextQuestions, retrieveAnswer } =
-    useContext(AppContext);
+  const {
+    correct,
+    questions,
+    indexTarget,
+    nextQuestions,
+    retrieveAnswer,
+    modal,
+  } = useContext(AppContext);
 
   const selectedItem = questions.find((item, index) => index === indexTarget);
 
@@ -12,8 +19,6 @@ function Quiz() {
     const tmpIndex = Math.floor(Math.random() * 4); //API 1 correct and 3 incorrect answers (4)
     const correctAnswer = selectedItem.correct_answer;
     const incorrectAnswers = selectedItem.incorrect_answers;
-    console.log(incorrectAnswers);
-    console.log(correctAnswer);
 
     const concatenateAnswer = [
       ...incorrectAnswers.slice(0, tmpIndex),
@@ -22,6 +27,11 @@ function Quiz() {
     ];
     return concatenateAnswer;
   };
+
+  if (modal) {
+    console.log("modal state:", modal);
+    return <Modal />;
+  }
 
   return (
     <div className="quiz_container col-11 col-md-10 col-lg-10">
@@ -51,32 +61,14 @@ function Quiz() {
             </ul>
           </div>
         )}
-        {/* <div className="show_quiz">
-          <h1 className="selected_query">
-            What was William Frederick Cody Better Known as ?{" "}
-          </h1>
-          <div className="show_proposal d-flex flex-column">
-            <button value="" className="selected_proposal">
-              Billy The Kid
-            </button>
-            <button value="" className="selected_proposal">
-              Wild Bill Hickok
-            </button>
-            <button value="" className="selected_proposal">
-              Pawnee Bill
-            </button>
-            <p className="selected_proposal">Buffalo Bill</p>
-          </div>
-        </div> */}
       </div>
       <div className="go_to_next d-flex">
-        <button
-          type="submit"
+        <input
+          type="button"
+          value="Next Questions"
           className="next_questions"
           onClick={nextQuestions}
-        >
-          Next Questions
-        </button>
+        />
       </div>
     </div>
   );

@@ -41,7 +41,7 @@ function AppProvider(props) {
       console.log(data.results);
       if (data) {
         setQuestions(() => data.results);
-        console.log(questions);
+        console.log("questions :", questions);
         setLoading(false);
       }
     } catch (err) {
@@ -73,19 +73,61 @@ function AppProvider(props) {
     fetchQuery(url);
   };
 
-  const nextQuestions = () => {
+  const nextQuestions = (e) => {
+    e.preventDefault();
     const percentage = (correct / questions.length) * 100;
 
-    if (indexTarget < questions.length) {
-      setIndexTarget(indexTarget + 1);
-    } else {
-      if (percentage > 50) {
-        setWinOrLoose(true);
-      } else {
-        setWinOrLoose(false);
+    if (e.target.value !== "Next Questions") {
+      if (indexTarget === questions.length - 1) {
+        if (percentage > 50) {
+          setWinOrLoose(true);
+        } else {
+          setWinOrLoose(false);
+        }
+        setIndexTarget(0);
+        setModal(true);
       }
-      setIndexTarget(0);
-      setModal(true);
+
+      if (indexTarget < questions.length - 1) {
+        setIndexTarget(indexTarget + 1);
+        console.log("indexTarget :", indexTarget);
+      }
+    } else {
+      if (indexTarget === questions.length - 1) {
+        const queryBox = questions.find((item, index) => index === indexTarget);
+        setResumeArray(() => [
+          ...resumeArray,
+          (resumeArray[indexTarget] = {
+            id: indexTarget + 1,
+            question: queryBox.question,
+            answer: queryBox.correct_answer,
+            right: false,
+            showed: false,
+          }),
+        ]);
+        if (percentage > 50) {
+          setWinOrLoose(true);
+        } else {
+          setWinOrLoose(false);
+        }
+        setIndexTarget(0);
+        setModal(true);
+      }
+
+      if (indexTarget < questions.length - 1) {
+        const queryBox = questions.find((item, index) => index === indexTarget);
+        setResumeArray(() => [
+          ...resumeArray,
+          (resumeArray[indexTarget] = {
+            id: indexTarget + 1,
+            question: queryBox.question,
+            answer: queryBox.correct_answer,
+            right: false,
+            showed: false,
+          }),
+        ]);
+        setIndexTarget(indexTarget + 1);
+      }
     }
   };
 
@@ -107,6 +149,7 @@ function AppProvider(props) {
           question: queryBox.question,
           answer: queryBox.correct_answer,
           right: true,
+          showed: false,
         }),
       ]);
     } else {
@@ -117,11 +160,13 @@ function AppProvider(props) {
           question: queryBox.question,
           answer: queryBox.correct_answer,
           right: false,
+          showed: false,
         }),
       ]);
     }
+    console.log("retrieve Array Side", resumeArray);
 
-    nextQuestions();
+    nextQuestions(e);
   };
 
   const playAgain = () => {
@@ -133,6 +178,7 @@ function AppProvider(props) {
       difficulty: "easy",
     });
     setShowResume(false);
+    setModal(false);
   };
 
   const recordGame = () => {

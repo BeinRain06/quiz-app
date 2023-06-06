@@ -4,8 +4,17 @@ import { AppContext } from "../../services/App-Context";
 import Resume from "./Resume";
 
 function Modal() {
-  const { modal, winOrLoose, showResume, playAgain, recordGame } =
-    useContext(AppContext);
+  const {
+    modal,
+    winOrLoose,
+    showResume,
+    playAgain,
+    recordGame,
+    correct,
+    questions,
+  } = useContext(AppContext);
+
+  const percentage = (correct / questions.length) * 100;
 
   if (showResume) {
     return <Resume />;
@@ -16,18 +25,20 @@ function Modal() {
       {modal && (
         <div className="modal_content d-flex">
           {winOrLoose ? (
-            <div className="modal_message">
-              <p className="modal_success">congratulations</p>
+            <div className="modal_message_one">
+              <div className="mod_success">
+                <p className="modal_success">Congratulations</p>
+              </div>
               <p className="modal_paragraph">
-                <span className="show_percentage">65%</span>of answers was
-                correct
+                <span className="show_percentage">{percentage}</span>% of
+                answers was correct
               </p>
             </div>
           ) : (
-            <div className="modal_message">
+            <div className="modal_message_two">
               <p className="modal_paragraph">
-                <span className="show_percentage">16%</span>of answers was
-                correct
+                <span className="show_percentage">{percentage}</span>% of
+                answers was correct
               </p>
             </div>
           )}
