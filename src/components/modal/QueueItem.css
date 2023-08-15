@@ -5,6 +5,7 @@
   --background-dark-purple: rgb(32, 1, 36);
   --background-medium-purple: rgb(102, 13, 98);
   --background-light-purple: rgb(151, 21, 145);
+  --background-cool-gray: #615e5e;
 }
 
 * {
@@ -74,7 +75,8 @@ div {
     align-items: center;
     padding: 0.35rem 0.5rem;
     color: #fff;
-    background-color: var(--background-dark-purple);
+
+    background-color: var(--background-cool-gray);
     font-size: 14px;
     margin: auto;
     outline: none;
